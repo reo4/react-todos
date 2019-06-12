@@ -44,7 +44,6 @@ class Store extends Container {
     super(props)
 
     this.state = this.readStorage()
-    this.filter()
   }
 
   readStorage () {
@@ -67,22 +66,6 @@ class Store extends Container {
 
   getTodos(){
     return this.state.todos.filter(item => item.list_id === this.state.currentList)
-  }
-
-  filter = async (filterName) => {
-    if (filterName) {
-      this.setState(state => {
-        let filteredTodos = this.getTodos().filter(item => item[filterName])
-        return { filteredTodos }
-      })
-    }
-    else {
-      this.setState(state => {
-        let filteredTodos = this.getTodos()
-        return { filteredTodos }
-        
-      })
-    }
   }
 
   toggleComplete = async id => {
