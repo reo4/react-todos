@@ -2,10 +2,11 @@ import React from 'react'
 
 import styled from 'styled-components'
 
-const AddTodo = ({ onAddTodo }) => {
+const Creator = ({ placeholder , onCreate }) => {
   const handleKeyPress = e => {
     if (e.key === 'Enter') {
-      onAddTodo(e.target.value)
+      onCreate(e.target.value)
+      e.target.value = ''
     }
   }
 
@@ -13,7 +14,7 @@ const AddTodo = ({ onAddTodo }) => {
     <Input
       type='text'
       onKeyPress={handleKeyPress}
-      placeholder='Add new todo...'
+      placeholder={placeholder}
     />
   )
 }
@@ -26,7 +27,6 @@ const Input = styled.input`
   padding: 10px 18px;
   font-size: 24px;
   height: 40px;
-  width: 500px;
   margin-bottom: 16px;
 
   &::placeholder {
@@ -34,4 +34,4 @@ const Input = styled.input`
   }
 `
 
-export default AddTodo
+export default Creator

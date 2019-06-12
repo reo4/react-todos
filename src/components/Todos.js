@@ -4,7 +4,7 @@ import styled from 'styled-components'
 
 import TodoItem from './TodoItem'
 
-const TodoList = ({ items, toggleComplete }) => (
+const Todos = ({ items, toggleComplete }) => (
   <Wrapper>
     {items.map(item => {
       const onComplete = e => {
@@ -21,4 +21,4 @@ const Wrapper = styled.div`
   flex-direction: column;
 `
 
-export default TodoList
+export default Todos

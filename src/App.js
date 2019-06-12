@@ -1,25 +1,38 @@
-import React from 'react'
+import React , {Fragment} from 'react'
 import { Provider, Subscribe } from 'unstated'
 
 import styled from 'styled-components'
 
-import TodosContainer from './store'
+import Store from './store'
 
-import TodoList from './components/TodoList'
-import AddTodo from './components/AddTodo'
+import Creator from './components/Creator'
+import Lists from './components/Lists'
+import filter from './Helpers/filter'
 
 function App () {
   return (
     <Provider>
       <Wrapper>
-        <Subscribe to={[TodosContainer]}>
-          {todos => {
-            const list = todos.getList()
+        <Subscribe to={[Store]}>
+          {store => {
             return (
-              <TodosWrapper>
-                <AddTodo onAddTodo={todos.createTodo} />
-                <TodoList items={list} toggleComplete={todos.toggleComplete} />
-              </TodosWrapper>
+              <Fragment>
+                <Column>
+                  <Creator placeholder="Add new list" onCreate={store.createList} />
+                  <Lists items={store.state.lists}></Lists>
+                </Column>
+                <Column>
+                  <Creator placeholder="Add new todo" onCreate={store.createTodo} />
+                  {
+                    filter(store)                 
+                  }
+                </Column>
+                <Column>
+                  <button onClick={() => store.switchFilter('completed')}>Completed</button>
+                  <button onClick={() => store.switchFilter('active')}>active</button>
+                  <button onClick={() => store.switchFilter('all')}>all</button>
+                </Column>
+              </Fragment>
             )
           }}
         </Subscribe>
@@ -32,15 +45,16 @@ const Wrapper = styled.div`
   background-color: #282c34;
   min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  align-items: center;
   justify-content: center;
   font-size: 24px;
   color: white;
+  padding: 25px;
+  flex-wrap: wrap;
 `
 
-const TodosWrapper = styled.div`
+const Column = styled.div`
   max-width: 500px;
+  margin: 10px;
   display: flex;
   flex-direction: column;
 `
